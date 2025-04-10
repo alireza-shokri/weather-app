@@ -401,15 +401,14 @@ const placement = function (result) {
 const getCityName = async function (latlng) {
   const infoCityes = await fetchForWeather(getCityNameURL(latlng));
 
-  if (!infoCityes.address) return (cityName = infoCityes.error);
-  console.log(infoCityes);
+  if (!infoCityes.address) return (cityName = 'unkown');
   cityName =
-    infoCityes.address.country||
-    infoCityes.address.city ||
-    infoCityes.address.town ||
-    infoCityes.address.village ||
-    infoCityes.address.hamlet
-
+  infoCityes.address.hamlet||
+  infoCityes.address.village ||
+  infoCityes.address.town ||
+  infoCityes.address.city ||
+  infoCityes.address.country||
+    'unkown'
   return cityName;
 };
 
@@ -446,7 +445,7 @@ const handleBtnSearch = async function () {
 const handleKey = function (e) {
   const allowedControlKeys = ['Enter','Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'];
   let char = e.key;
-  if (!/^[a-zA-Z0-9.,]$/.test(char) && !allowedControlKeys.includes(char)) {
+  if (!/^[a-zA-Z0-9.,-]$/.test(char) && !allowedControlKeys.includes(char)) {
     e.preventDefault();
     return;
   }
