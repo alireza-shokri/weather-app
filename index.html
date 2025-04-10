@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="ol_map/ol.css" />
+    <script src="ol_map/ol.js"></script>
+    <link
+      rel="shortcut icon"
+      href="icons_static/favicon.webp"
+      type="image/x-icon"
+    />
+    <title>weather</title>
+  </head>
+  <body>
+    <div class="content">
+      <div class="search_bar search_bar_long Background_box">
+        <svg
+          viewBox="0 0 16 16"
+          height="48"
+          width="48"
+          class="windows-loading-spinner input_loader"
+        >
+          <circle r="7px" cy="8px" cx="8px"></circle>
+        </svg>
+        <input
+          type="text"
+          placeholder="search for cities ..."
+          id="input_search"
+          class="Background_box"
+        />
+        <button class="btn_search btn_wrong" disabled>➤</button>
+      </div>
+
+      <!-- time  -->
+      <div class="time_parent">
+        <span class="time"></span>
+        <span class="day_name"></span>
+      </div>
+
+      <main class="weather_box_parent">
+        <!-- currentWeather  -->
+        <section class="current_weather">
+          <div class="current_info">
+            <h1 class="city_name"></h1>
+            <div class="temperature">
+              <span class="temp"></span>
+              <div class="parent_tempMax_tempMin">
+                <img src="icons_static/tempMax.svg" alt="icon temp max" />
+                <span class="tempMax"></span>
+                <img src="icons_static/tempMin.svg" alt="icon temp min" />
+                <span class="tempMin"></span>
+              </div>
+            </div>
+          </div>
+          <div class="current_parent_icon_huge">
+            <img src="icons_dynamic/rainy.svg" alt="icon" id="icon_current" />
+          </div>
+        </section>
+
+        <section class="hourly_forecast Background_box">
+          <ul class="hourly_forecast_list">
+            <!-- <li class="hourly_forecast_item">
+              <span class="hourly_forecast_time">9:99Am</span>
+              <img src="icons_static/cloudy.svg" alt="" class="hourly_forecast_icon" />
+              <span class="hourly_forecast_temp">76 </span>
+            </li> -->
+          </ul>
+        </section>
+
+        <section class="air_condition Background_box">
+          <div class="air_condition_item">
+            <div class="parent_icon_title">
+              <img
+                src="icons_static/humidity.png"
+                alt="icon humidity"
+                class="air_condition_icon"
+              />
+              <span class="condition_title">humidity</span>
+            </div>
+            <span class="air_condition_value humidity_value"></span>
+          </div>
+
+          <div class="air_condition_item">
+            <div class="parent_icon_title">
+              <img
+                src="icons_static/visibility.png"
+                alt="icon visibility"
+                class="air_condition_icon"
+              />
+              <span class="condition_title">visibility</span>
+            </div>
+            <span class="air_condition_value visibility_value"></span>
+          </div>
+
+          <div class="air_condition_item">
+            <div class="parent_icon_title">
+              <img
+                src="icons_static/uvIndex.png"
+                alt="icon uvIndex"
+                class="air_condition_icon"
+              />
+              <span class="condition_title">uvIndex</span>
+            </div>
+            <span class="air_condition_value uvIndex_value"></span>
+          </div>
+
+          <div class="air_condition_item">
+            <div class="parent_icon_title">
+              <img
+                src="icons_static/cloudy.svg"
+                alt="icon windSpeed"
+                class="air_condition_icon cloudy"
+              />
+              <span class="condition_title">wind Speed</span>
+            </div>
+            <span class="air_condition_value windSpeed_value"></span>
+          </div>
+        </section>
+
+        <!-- loader change weekly_forecast  -->
+        <div class="loader_change_weekly">
+          <svg
+            viewBox="0 0 16 16"
+            height="48"
+            width="48"
+            class="windows-loading-spinner"
+          >
+            <circle r="7px" cy="8px" cx="8px"></circle>
+          </svg>
+        </div>
+      </main>
+
+      <div class="weekly_forecast Background_box">
+        <p class="desc">7-DAY FORECAST</p>
+
+        <ul class="weekly_forecast_list">
+          <!-- <li class="weekly_forecast_item">
+            <span class="day_name">Today</span>
+            <div class="parent_icon_title">
+              <img src="icons_static/cloudy.svg" alt="icon" class="weekly_forecast_icon" />
+              <span class="weekly_forecast_title">Sunny</span>
+            </div>
+            <span class="weekly_parent_temps"
+              ><span class="weekly_tempMax">37</span
+              ><span class="weekly_tempMin"> / 21</span></span
+            >
+          </li> -->
+        </ul>
+      </div>
+
+      <!-- loader content  -->
+      <div class="parent_loader_content">
+        <div class="loader">
+          <div class="loading-text">
+            Loading<span class="dot">.</span><span class="dot">.</span
+            ><span class="dot">.</span>
+          </div>
+          <div class="loading-bar-background">
+            <div class="loading-bar">
+              <div class="white-bars-container">
+                <div class="white-bar"></div>
+                <div class="white-bar"></div>
+                <div class="white-bar"></div>
+                <div class="white-bar"></div>
+                <div class="white-bar"></div>
+                <div class="white-bar"></div>
+                <div class="white-bar"></div>
+                <div class="white-bar"></div>
+                <div class="white-bar"></div>
+                <div class="white-bar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="err">
+        <p class="messageErr"></p>
+      </div>
+
+      <div class="parent_map">
+        <div id="map"></div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
