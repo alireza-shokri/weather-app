@@ -443,7 +443,7 @@ const handleBtnSearch = async function () {
 
 // press key  input
 const handleKey = function (e) {
-  const allowedControlKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'];
+  const allowedControlKeys = ['Enter','Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'];
   let char = e.key;
   if (!/^[a-zA-Z0-9.,]$/.test(char) && !allowedControlKeys.includes(char)) {
     e.preventDefault();
@@ -476,13 +476,14 @@ const selectCityINmap = function (arrayAddress) {
 searchBar.input.addEventListener('click', clickdInput);
 searchBar.input.addEventListener('keyup', handleKey);
 searchBar.input.addEventListener('keydown', handleKey);
+searchBar.input.addEventListener('keypress',handleKey)
 searchBar.btnSearch.addEventListener('click', handleBtnSearch);
 
 // map
 function initialMap() {
   let zoomInMap;
   const marker = document.createElement('img');
-  marker.src = '/icons_static/marker.svg';
+  marker.src = 'icons_static/marker.svg';
   marker.style.width = '1.8rem';
   marker.style.height = '1.8rem';
   marker.style.transform = 'translate(-50%, -100%)';
