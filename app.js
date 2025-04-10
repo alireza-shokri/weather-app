@@ -402,12 +402,13 @@ const getCityName = async function (latlng) {
   const infoCityes = await fetchForWeather(getCityNameURL(latlng));
 
   if (!infoCityes.address) return (cityName = infoCityes.error);
-
+  console.log(infoCityes);
   cityName =
+    infoCityes.address.country||
     infoCityes.address.city ||
     infoCityes.address.town ||
     infoCityes.address.village ||
-    infoCityes.address.hamlet;
+    infoCityes.address.hamlet
 
   return cityName;
 };
