@@ -34,6 +34,7 @@ body {
   background-size: cover;
   font-family: "Exo 2", sans-serif;
   user-select: none;
+  transition: all 0.3s ease;
 }
 
 /* content  */
@@ -384,7 +385,7 @@ input:-webkit-autofill:active {
     grid-template-columns: 100%;
     width: 100%;
     padding: 1rem 0.3rem;
-    overflow: hidden;
+    overflow-x: hidden;
     border-radius: 0;
   }
 
