@@ -1,17 +1,17 @@
-import { initialMap } from './map/map.js';
-const APIKEY = '9G6P5A47C66PNNK6ADKAGMFYP';
+import { initialMap } from "./map/map.js";
+const APIKEY = "9G6P5A47C66PNNK6ADKAGMFYP";
 const $ = document;
 const body = $.body;
-const content = $.querySelector('.content');
-const loaderContent = $.querySelector('.parent_loader_content');
+const content = $.querySelector(".content");
+const loaderContent = $.querySelector(".parent_loader_content");
 
-const weatherBoxParent = $.querySelector('.weather_box_parent');
+const weatherBoxParent = $.querySelector(".weather_box_parent");
 
-const hourlyForecasts = $.querySelector('.hourly_forecast_list');
+const hourlyForecasts = $.querySelector(".hourly_forecast_list");
 
-const weeklyForecast = $.querySelector('.weekly_forecast ');
-const weeklyForecastList = $.querySelector('.weekly_forecast_list');
-const loaderChangeWeeklyItem = $.querySelector('.loader_change_weekly');
+const weeklyForecast = $.querySelector(".weekly_forecast ");
+const weeklyForecastList = $.querySelector(".weekly_forecast_list");
+const loaderChangeWeeklyItem = $.querySelector(".loader_change_weekly");
 
 let hour = new Date().getHours();
 const bgBody =
@@ -21,10 +21,10 @@ const bgBody =
 body.style.backgroundImage = `url(${bgBody})`;
 
 const searchBar = {
-  searchBarElm: $.querySelector('.search_bar'),
-  inputElm: $.getElementById('input_search'),
-  loaderInput: $.querySelector('.input_loader'),
-  btnSearch: $.querySelector('.btn_search'),
+  searchBarElm: $.querySelector(".search_bar"),
+  inputElm: $.getElementById("input_search"),
+  loaderInput: $.querySelector(".input_loader"),
+  btnSearch: $.querySelector(".btn_search"),
 
   //let
   timeout: null,
@@ -32,32 +32,32 @@ const searchBar = {
 };
 
 const timeParent = {
-  timeParentElm: $.querySelector('.time_parent'),
-  dayName: $.querySelector('.day_name'),
-  time: $.querySelector('.time'),
+  timeParentElm: $.querySelector(".time_parent"),
+  dayName: $.querySelector(".day_name"),
+  time: $.querySelector(".time"),
   //let
   intervalTime: null,
 };
 
 const currentWeather = {
-  cityName: $.querySelector('.city_name'),
-  temp: $.querySelector('.temperature .temp'),
-  icon: $.querySelector('#icon_current'),
-  tempMax: $.querySelector('.tempMax'),
-  tempMin: $.querySelector('.tempMin'),
+  cityName: $.querySelector(".city_name"),
+  temp: $.querySelector(".temperature .temp"),
+  icon: $.querySelector("#icon_current"),
+  tempMax: $.querySelector(".tempMax"),
+  tempMin: $.querySelector(".tempMin"),
 };
 
 const airConditions = {
-  humidityValue: $.querySelector('.humidity_value'),
-  visibilityValue: $.querySelector('.visibility_value'),
-  uvValue: $.querySelector('.uvIndex_value'),
-  windSpeedValue: $.querySelector('.windSpeed_value'),
+  humidityValue: $.querySelector(".humidity_value"),
+  visibilityValue: $.querySelector(".visibility_value"),
+  uvValue: $.querySelector(".uvIndex_value"),
+  windSpeedValue: $.querySelector(".windSpeed_value"),
 };
 
-const errMessage = document.querySelector('.messageErr');
-const err = $.querySelector('.err');
+const errMessage = document.querySelector(".messageErr");
+const err = $.querySelector(".err");
 
-const map = $.querySelector('.parent_map');
+const map = $.querySelector(".parent_map");
 let mapController;
 
 let childrenWeekly;
@@ -67,7 +67,7 @@ let resultPublic;
 
 // function short
 const toggleDisplay = function (elm, status) {
-  status ? (elm.style.display = 'block') : (elm.style.display = 'none');
+  status ? (elm.style.display = "block") : (elm.style.display = "none");
 };
 
 const toggleDisabled = function (elm, status) {
@@ -84,20 +84,20 @@ const testRejexText = function (value) {
 // red and green and disabled btn search
 const btnSearchActive = function (status) {
   if (status) {
-    searchBar.btnSearch.className = 'btn_search btn_crrect';
+    searchBar.btnSearch.className = "btn_search btn_crrect";
     toggleDisabled(searchBar.btnSearch, false);
   } else {
-    searchBar.btnSearch.className = 'btn_search btn_wrong';
+    searchBar.btnSearch.className = "btn_search btn_wrong";
     toggleDisabled(searchBar.btnSearch, true);
   }
 };
 
 // hide and show boxs
 const funcShwBoxs = function (status) {
-  timeParent.timeParentElm.style.display = status ? 'flex' : 'none';
-  weatherBoxParent.style.display = status ? 'block' : 'none';
-  weeklyForecast.style.display = status ? 'block' : 'none';
-  searchBar.searchBarElm.classList.toggle('search_bar_long', !status);
+  timeParent.timeParentElm.style.display = status ? "flex" : "none";
+  weatherBoxParent.style.display = status ? "block" : "none";
+  weeklyForecast.style.display = status ? "block" : "none";
+  searchBar.searchBarElm.classList.toggle("search_bar_long", !status);
 };
 
 // url generator
@@ -106,7 +106,7 @@ const getWeatherURL = function (value) {
 };
 
 const getCityNameURL = function (value) {
-  const [lat, lng] = value.split(',').map(Number);
+  const [lat, lng] = value.split(",").map(Number);
   return `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
 };
 
@@ -137,49 +137,49 @@ const fetchData = async function (url, loader, errText) {
 };
 
 // for  sound fetchData ---------------------------
-const fetchForWeather = url =>
-  fetchData(url, loaderContent, 'faild to fetch 🩻');
+const fetchForWeather = (url) =>
+  fetchData(url, loaderContent, "faild to fetch 🩻");
 
 // help to find user location
-const fetchForMapMove = async url =>
-  fetchData(url, searchBar.loaderInput, 'faild to find city 🗺️');
+const fetchForMapMove = async (url) =>
+  fetchData(url, searchBar.loaderInput, "faild to find city 🗺️");
 
 // try find over map
 
-const getLocalTime = timezone => {
+const getLocalTime = (timezone) => {
   const now = new Date();
-  return new Intl.DateTimeFormat('en-GB', {
+  return new Intl.DateTimeFormat("en-GB", {
     timeZone: timezone,
-    weekday: 'long',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
+    weekday: "long",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
   }).format(now);
 };
 
 const setIconWeather = function (icon, kindVrodi) {
   let kind;
-  kindVrodi === 'dynamic'
-    ? (kind = 'icons_dynamic/')
-    : (kind = 'icons_static/');
+  kindVrodi === "dynamic"
+    ? (kind = "icons_dynamic/")
+    : (kind = "icons_static/");
   switch (icon) {
-    case 'clear-night':
+    case "clear-night":
       return `${kind}night.svg`;
-    case 'clear-day':
+    case "clear-day":
       return `${kind}sun.svg`;
-    case 'cloudy':
+    case "cloudy":
       return `${kind}cloudy.svg`;
-    case 'partly-cloudy-night':
+    case "partly-cloudy-night":
       return `${kind}cloudy-night.svg`;
-    case 'partly-cloudy-day':
+    case "partly-cloudy-day":
       return `${kind}cloudy-day.svg`;
-    case 'rain':
+    case "rain":
       return `${kind}rainy.svg`;
-    case 'snow':
+    case "snow":
       return `${kind}snow.svg`;
-    case 'fog':
+    case "fog":
       return `icons_static/fog.png`;
-    case 'wind':
+    case "wind":
       return `icons_static/windy.png`;
     default:
       return ``;
@@ -188,20 +188,20 @@ const setIconWeather = function (icon, kindVrodi) {
 
 const updateTime = function (timezone) {
   timeParent.intervalTime = setInterval(() => {
-    const timeLocal = getLocalTime(timezone).split(' ');
+    const timeLocal = getLocalTime(timezone).split(" ");
     timeParent.time.textContent = timeLocal[1];
   }, 1000);
 };
 
 const jeneratorBoxHour = function (selectDay, index) {
   const time = selectDay.hours[index].datetime.slice(0, 5); //"00:00"
-  const AMorPM = time.slice(0, 2) - 12 >= 0 ? 'PM' : 'AM';
+  const AMorPM = time.slice(0, 2) - 12 >= 0 ? "PM" : "AM";
 
   const temp = selectDay.hours[index].temp;
-  const icon = setIconWeather(selectDay.hours[index].icon, 'static');
+  const icon = setIconWeather(selectDay.hours[index].icon, "static");
 
   hourlyForecasts.insertAdjacentHTML(
-    'beforeend',
+    "beforeend",
     `<li class="hourly_forecast_item">
             <span class="hourly_forecast_time">${time} ${AMorPM} </span>
             <img src=${icon} alt="icon" class="hourly_forecast_icon">
@@ -211,7 +211,7 @@ const jeneratorBoxHour = function (selectDay, index) {
 };
 
 const placementBoxHour = function (result, counterDay, hour) {
-  hourlyForecasts.innerHTML = '';
+  hourlyForecasts.innerHTML = "";
   let countrItem = 0;
   let selectDay = result.days[counterDay];
   let index;
@@ -247,10 +247,10 @@ const placementCurrentWeather = function (
   icon
 ) {
   currentWeather.cityName.textContent = cityName;
-  currentWeather.temp.textContent = temp + '°';
-  currentWeather.tempMax.textContent = tempmax + '°';
-  currentWeather.tempMin.textContent = tempmin + '°';
-  currentWeather.icon.src = setIconWeather(icon, 'dynamic');
+  currentWeather.temp.textContent = temp + "°";
+  currentWeather.tempMax.textContent = tempmax + "°";
+  currentWeather.tempMin.textContent = tempmin + "°";
+  currentWeather.icon.src = setIconWeather(icon, "dynamic");
 };
 
 // getNameDay
@@ -258,36 +258,36 @@ const placementCurrentWeather = function (
 function getNameDay(dateString) {
   const date = new Date(dateString);
   const days = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
   ];
   return days[date.getDay()];
 }
 
 const loaderWeatherBoxParent = () => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     toggleDisplay(loaderChangeWeeklyItem, true);
-    weatherBoxParent.style.opacity = '0.5';
+    weatherBoxParent.style.opacity = "0.5";
 
     setTimeout(() => {
       toggleDisplay(loaderChangeWeeklyItem, false);
-      weatherBoxParent.style.opacity = '1';
+      weatherBoxParent.style.opacity = "1";
       resolve();
     }, 1000);
   });
 };
 
 let indexItemWeekly;
-const selectWeeklyItem = async index => {
+const selectWeeklyItem = async (index) => {
   // screenTop top
   window.scrollTo({
     top: 0,
-    behavior: 'smooth',
+    behavior: "smooth",
   });
 
   if (index === indexItemWeekly) return; //duble clickd ❌
@@ -295,7 +295,7 @@ const selectWeeklyItem = async index => {
 
   // class
   childrenWeekly.forEach((item, i) =>
-    item.classList.toggle('disabled', i === index)
+    item.classList.toggle("disabled", i === index)
   );
 
   // wait for loader
@@ -305,7 +305,7 @@ const selectWeeklyItem = async index => {
   const selectedDay = days[index];
   const time = getLocalTime(timezone);
   const currentHour =
-    index === 0 ? Number(time.split(' ')[1].split(':')[0]) : -1;
+    index === 0 ? Number(time.split(" ")[1].split(":")[0]) : -1;
 
   // update info weather
   placementBoxHour(resultPublic, index, currentHour);
@@ -321,14 +321,14 @@ const selectWeeklyItem = async index => {
 
 const placementWeeklyForecast = function (result) {
   const selectDays = result.days.slice(0, 7);
-  weeklyForecastList.innerHTML = '';
+  weeklyForecastList.innerHTML = "";
 
   const weeklyItemsHTML = selectDays
     .map((item, i) => {
-      const desc = item.conditions.trim().split(',');
+      const desc = item.conditions.trim().split(",");
       const lastDesc = desc[desc.length - 1];
-      const dayName = i === 0 ? 'Today' : getNameDay(item.datetime);
-      const iconSrc = setIconWeather(item.icon, 'static');
+      const dayName = i === 0 ? "Today" : getNameDay(item.datetime);
+      const iconSrc = setIconWeather(item.icon, "static");
       const maxTemp = Math.round(item.tempmax);
       const minTemp = Math.round(item.tempmin);
 
@@ -344,26 +344,26 @@ const placementWeeklyForecast = function (result) {
               </span>
             </li>`;
     })
-    .join('');
+    .join("");
 
   weeklyForecastList.innerHTML = weeklyItemsHTML;
 
   childrenWeekly = Array.from(
-    document.querySelectorAll('.weekly_forecast_item')
+    document.querySelectorAll(".weekly_forecast_item")
   );
 
   // add event click
   childrenWeekly.map((item, i) =>
-    item.addEventListener('click', () => selectWeeklyItem(i))
+    item.addEventListener("click", () => selectWeeklyItem(i))
   );
 
-  childrenWeekly[0].classList.add('disabled');
+  childrenWeekly[0].classList.add("disabled");
   indexItemWeekly = 0;
 };
 
 const placement = function (result) {
   const currentWeather = result.currentConditions;
-  const timeLocal = getLocalTime(result.timezone).split(' ');
+  const timeLocal = getLocalTime(result.timezone).split(" ");
   timeParent.dayName.textContent = timeLocal[0];
 
   updateTime(result.timezone);
@@ -376,7 +376,7 @@ const placement = function (result) {
     currentWeather.icon
   );
 
-  placementBoxHour(result, 0, Number(timeLocal[1].split(':')[0]));
+  placementBoxHour(result, 0, Number(timeLocal[1].split(":")[0]));
   placementAirConditions(result.currentConditions);
   placementWeeklyForecast(result);
 };
@@ -384,20 +384,20 @@ const placement = function (result) {
 const getCityName = async function (latlng) {
   let cityName;
   const infoCityes = await fetchForWeather(getCityNameURL(latlng));
-  if (!infoCityes?.address) return (cityName = 'unknown 📛');
+  if (!infoCityes?.address) return (cityName = "unknown 📛");
   cityName =
     infoCityes.address.hamlet ||
     infoCityes.address.village ||
     infoCityes.address.town ||
     infoCityes.address.city ||
     infoCityes.address.country ||
-    'unknown 📛';
+    "unknown 📛";
   return cityName;
 };
 const localStorageCoordinates = function (access, array = null) {
-  if (access === 'set')
-    localStorage.setItem('coordinates', JSON.stringify(array));
-  else if (access === 'get') return localStorage.getItem('coordinates');
+  if (access === "set")
+    localStorage.setItem("coordinates", JSON.stringify(array));
+  else if (access === "get") return localStorage.getItem("coordinates");
 };
 // clickd btn Search
 const handleBtnSearch = async function () {
@@ -414,17 +414,17 @@ const handleBtnSearch = async function () {
   else {
     const url = getWeatherURL(inputValue);
     const response = await fetchForWeather(url);
+    if (!response) return;
     const city = await getCityName(inputValue);
 
-    if (!response) return;
     resultPublic = { ...response, cityName: city };
   }
 
   placement(resultPublic);
   funcShwBoxs(true);
-  searchBar.inputElm.value = '';
+  searchBar.inputElm.value = "";
   btnSearchActive(false);
-  localStorageCoordinates('set', [
+  localStorageCoordinates("set", [
     resultPublic.longitude,
     resultPublic.latitude,
   ]);
@@ -443,7 +443,7 @@ const tryFindInputSearch = async function (value) {
     searchBar.inputElm.blur();
 
     if (testRegxLatLng(inputValue)) {
-      const arrLngLat = inputValue.split(',');
+      const arrLngLat = inputValue.split(",");
       mapController.selectLocation([arrLngLat[1], arrLngLat[0]]);
       btnSearchActive(true);
     } else if (testRejexText(inputValue)) {
@@ -452,18 +452,18 @@ const tryFindInputSearch = async function (value) {
       resultPublic = data;
       mapController.selectLocation([data.longitude, data.latitude]);
       btnSearchActive(true);
-    } else showError('Wrong coordinates ❌');
+    } else showError("Wrong coordinates ❌");
   }, 1600);
 };
 
 // input evetns
 const allowedControlKeys = [
-  'Enter',
-  'Backspace',
-  'Delete',
-  'ArrowLeft',
-  'ArrowRight',
-  ' ',
+  "Enter",
+  "Backspace",
+  "Delete",
+  "ArrowLeft",
+  "ArrowRight",
+  " ",
 ];
 // مدیریت کیبورد
 const handleKeyDown = function (e) {
@@ -477,15 +477,15 @@ const handleKeyDown = function (e) {
 
 const handlePaste = function (e) {
   e.preventDefault();
-  const pastedText = e.clipboardData.getData('text');
-  const cleanedText = pastedText.replace(/[^a-zA-Z0-9.,-]/g, '');
+  const pastedText = e.clipboardData.getData("text");
+  const cleanedText = pastedText.replace(/[^a-zA-Z0-9.,-]/g, "");
 
   const input = e.target;
   const start = input.selectionStart;
   const end = input.selectionEnd;
 
-  input.setRangeText(cleanedText, start, end, 'end');
-  input.dispatchEvent(new Event('input', { bubbles: true }));
+  input.setRangeText(cleanedText, start, end, "end");
+  input.dispatchEvent(new Event("input", { bubbles: true }));
   searchBar.inputElm.blur();
 };
 
@@ -504,8 +504,8 @@ const clickdInput = function () {
   toggleDisplay(map, true);
   if (!isFirstLoadMap) {
     mapController = initialMap(selectCityINmap);
-    if (localStorageCoordinates('get'))
-      mapController.selectLocation(JSON.parse(localStorageCoordinates('get')));
+    if (localStorageCoordinates("get"))
+      mapController.selectLocation(JSON.parse(localStorageCoordinates("get")));
     isFirstLoadMap = true;
   }
 };
@@ -518,8 +518,8 @@ const selectCityINmap = function (arrayAddress) {
   resultPublic = null;
 };
 
-searchBar.inputElm.addEventListener('click', clickdInput);
-searchBar.inputElm.addEventListener('keydown', handleKeyDown);
-searchBar.inputElm.addEventListener('paste', handlePaste);
-searchBar.inputElm.addEventListener('input', changeInput);
-searchBar.btnSearch.addEventListener('click', handleBtnSearch);
+searchBar.inputElm.addEventListener("click", clickdInput);
+searchBar.inputElm.addEventListener("keydown", handleKeyDown);
+searchBar.inputElm.addEventListener("paste", handlePaste);
+searchBar.inputElm.addEventListener("input", changeInput);
+searchBar.btnSearch.addEventListener("click", handleBtnSearch);
