@@ -468,7 +468,6 @@ const allowedControlKeys = [
 // مدیریت کیبورد
 const handleKeyDown = function (e) {
   const char = e.key;
-
   if (!/[a-zA-Z0-9.,-]/.test(char) && !allowedControlKeys.includes(char)) {
     e.preventDefault();
     return;
@@ -517,7 +516,14 @@ const selectCityINmap = function (arrayAddress) {
   btnSearchActive(true);
   resultPublic = null;
 };
-
+// show map with keydown contrl and i
+const handelKeyWindow=function(e){
+  if (e.key=='i' && e.ctrlKey) {
+    searchBar.inputElm.focus()
+    searchBar.inputElm.click()
+  }
+}
+document.addEventListener('keydown',handelKeyWindow)
 searchBar.inputElm.addEventListener("click", clickdInput);
 searchBar.inputElm.addEventListener("keydown", handleKeyDown);
 searchBar.inputElm.addEventListener("paste", handlePaste);
