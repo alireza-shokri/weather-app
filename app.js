@@ -518,10 +518,12 @@ const selectCityINmap = function (arrayAddress) {
 };
 // show map with keydown contrl and i
 const handelKeyWindow=function(e){
-  if (e.key=='i' && e.ctrlKey) {
+  console.log(e);
+  if (e.key==='i' && e.ctrlKey) {
     searchBar.inputElm.focus()
     searchBar.inputElm.click()
   }
+  if(e.keyCode===13) searchBar.btnSearch.click()
 }
 document.addEventListener('keydown',handelKeyWindow)
 searchBar.inputElm.addEventListener("click", clickdInput);
